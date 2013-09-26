@@ -6,19 +6,20 @@ module Artoo
       # NOTE rgb led being used is a common-anode style led, meaning blah blah blah
       #      tl;dr values are reversed: 0/0/0 is full brightness; 255/255/255 is off
       LED_COLORS = {
-        :off     => { red: 255, green: 255, blue: 255 },
-        :blue    => { red: 255, green: 255, blue:   0 },
-        :green   => { red: 255, green:   0, blue: 255 },
-        :red     => { red:   0, green: 255, blue: 255 },
-        :yellow  => { red:   0, green:   0, blue: 255 },
-        :white   => { red:   0, green:   0, blue:   0 },
+        :red    => { red:   0, green: 255, blue: 255 },
+        :orange => { red:   0, green:  90, blue: 255 },
+        :yellow => { red:   0, green:   0, blue: 255 },
+        :green  => { red: 255, green:   0, blue: 255 },
+        :blue   => { red: 255, green: 255, blue:   0 },
+        :indigo => { red: 180, green: 255, blue: 125 },
+        :violet => { red:  17, green: 125, blue:  17 },
+        :white  => { red:   0, green:   0, blue:   0 },
+        :off    => { red: 255, green: 255, blue: 255 },
       }
 
-      COMMANDS = [:color, :off].freeze
+      COMMANDS = [:red, :orange, :yellow, :green, :blue, :indigo, :violet, :white, :off].freeze
 
       def initialize(params = {})
-        require 'pp'
-        pp params
         missing_pins = [:red_pin, :green_pin, :blue_pin] - params[:additional_params].keys
         unless missing_pins.empty?
           raise "Must set at minimum: #{missing_pins.join ", "}"
@@ -42,6 +43,38 @@ module Artoo
         brightness(@blue_pin, @rgb_val[:blue])
 
         @rgb_val
+      end
+
+      def red
+        color :red
+      end
+
+      def orange
+        color :orange
+      end
+
+      def yellow
+        color :yellow
+      end
+
+      def green
+        color :green
+      end
+
+      def blue
+        color :blue
+      end
+
+      def indigo
+        color :indigo
+      end
+
+      def violet
+        color :violet
+      end
+
+      def white
+        color :white
       end
 
       def off
